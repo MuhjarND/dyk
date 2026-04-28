@@ -17,7 +17,9 @@
                 <label>Deskripsi</label>
                 <textarea name="description" class="form-control" rows="3" placeholder="Deskripsi singkat (opsional)">{{ old('description') }}</textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <div class="form-actions form-actions-compact">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
         </form>
     </div>
 
@@ -63,7 +65,7 @@
                 <label>Deskripsi</label>
                 <textarea name="description" id="editDesc" class="form-control" rows="3"></textarea>
             </div>
-            <div style="display:flex;gap:12px;">
+            <div class="form-actions form-actions-compact">
                 <button type="submit" class="btn btn-primary">Perbarui</button>
                 <button type="button" class="btn btn-outline" onclick="document.getElementById('editModal').style.display='none'">Batal</button>
             </div>

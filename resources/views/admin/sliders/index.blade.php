@@ -5,7 +5,9 @@
 <div class="data-card">
     <div class="data-card-header">
         <h3>Daftar Slider</h3>
-        <a href="{{ route('admin.sliders.create') }}" class="btn btn-primary btn-sm">+ Tambah Slider</a>
+        <div class="header-actions">
+            <a href="{{ route('admin.sliders.create') }}" class="btn btn-primary btn-sm">+ Tambah Slider</a>
+        </div>
     </div>
     <table class="data-table">
         <thead>

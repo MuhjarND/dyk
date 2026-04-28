@@ -5,7 +5,9 @@
 <div class="data-card">
     <div class="data-card-header">
         <h3>Daftar Agenda</h3>
-        <a href="{{ route('admin.agendas.create') }}" class="btn btn-primary btn-sm">+ Tambah Agenda</a>
+        <div class="header-actions">
+            <a href="{{ route('admin.agendas.create') }}" class="btn btn-primary btn-sm">+ Tambah Agenda</a>
+        </div>
     </div>
     <table class="data-table">
         <thead>

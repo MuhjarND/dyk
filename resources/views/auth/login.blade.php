@@ -11,7 +11,7 @@
     <div class="login-wrapper">
         <div class="login-card">
             <div class="logo">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo">
+                <img src="{{ asset('logo_web.png') }}" alt="Logo Dharmayukti Karini Cabang Papua Barat">
                 <h2>Dharmayukti Karini</h2>
                 <p>Masuk ke Panel Admin</p>
             </div>

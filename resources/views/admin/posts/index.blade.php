@@ -10,7 +10,9 @@
                 <input type="text" name="cari" placeholder="Cari..." value="{{ request('cari') }}" style="padding:8px 12px;">
                 <button type="submit" style="padding:8px 14px;">Cari</button>
             </form>
+        <div class="header-actions">
             <a href="{{ route('admin.posts.create') }}" class="btn btn-primary btn-sm">+ Buat Berita</a>
+        </div>
         </div>
     </div>
     <table class="data-table">

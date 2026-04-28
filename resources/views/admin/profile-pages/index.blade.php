@@ -5,7 +5,9 @@
 <div class="data-card">
     <div class="data-card-header">
         <h3>Halaman Profil</h3>
-        <a href="{{ route('admin.profile-pages.create') }}" class="btn btn-primary btn-sm">+ Tambah Halaman</a>
+        <div class="header-actions">
+            <a href="{{ route('admin.profile-pages.create') }}" class="btn btn-primary btn-sm">+ Tambah Halaman</a>
+        </div>
     </div>
     <table class="data-table">
         <thead>

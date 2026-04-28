@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -30,6 +31,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'email' => 'required|email|unique:users,email',
+            'whatsapp' => 'nullable|max:30',
             'password' => 'required|min:6|confirmed',
             'role' => 'required|in:admin,author',
         ]);
@@ -37,7 +39,9 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'whatsapp' => $request->whatsapp,
             'password' => Hash::make($request->password),
+            'account_password' => Crypt::encryptString($request->password),
             'role' => $request->role,
         ]);
 
@@ -58,6 +62,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|max:100',
             'email' => 'required|email|unique:users,email,' . $id,
+            'whatsapp' => 'nullable|max:30',
             'password' => 'nullable|min:6|confirmed',
             'role' => 'required|in:admin,author',
         ]);
@@ -65,11 +70,13 @@ class UserController extends Controller
         $data = [
             'name' => $request->name,
             'email' => $request->email,
+            'whatsapp' => $request->whatsapp,
             'role' => $request->role,
         ];
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
+            $data['account_password'] = Crypt::encryptString($request->password);
         }
 
         $user->update($data);

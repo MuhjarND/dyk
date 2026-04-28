@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
@@ -16,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'avatar',
+        'name', 'email', 'whatsapp', 'password', 'account_password', 'role', 'avatar',
     ];
 
     /**
@@ -25,7 +26,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'account_password', 'remember_token',
     ];
 
     /**
@@ -58,5 +59,57 @@ class User extends Authenticatable
             return asset('storage/uploads/' . $this->avatar);
         }
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=1B7A3D&color=fff';
+    }
+
+    public function getNormalizedWhatsappAttribute()
+    {
+        if (!$this->whatsapp) {
+            return null;
+        }
+
+        $number = preg_replace('/\D+/', '', $this->whatsapp);
+
+        if (strpos($number, '0') === 0) {
+            return '62' . substr($number, 1);
+        }
+
+        if (strpos($number, '62') === 0) {
+            return $number;
+        }
+
+        return $number;
+    }
+
+    public function getReadableAccountPasswordAttribute()
+    {
+        if (!$this->account_password) {
+            return null;
+        }
+
+        try {
+            return Crypt::decryptString($this->account_password);
+        } catch (\Exception $exception) {
+            return null;
+        }
+    }
+
+    public function getWhatsappAccountMessageAttribute()
+    {
+        $password = $this->readable_account_password ?: '(silakan hubungi admin untuk password akun)';
+
+        return "Halo {$this->name}, berikut akun Website Dharmayukti Karini Cabang Papua Barat:\n\n"
+            . "Email: {$this->email}\n"
+            . "Password: {$password}\n"
+            . "Link login: " . url('/login') . "\n\n"
+            . "Mohon simpan akun ini dengan baik.";
+    }
+
+    public function getWhatsappAccountUrlAttribute()
+    {
+        if (!$this->normalized_whatsapp) {
+            return null;
+        }
+
+        return 'https://wa.me/' . $this->normalized_whatsapp . '?text=' . rawurlencode($this->whatsapp_account_message);
     }
 }

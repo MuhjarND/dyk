@@ -36,7 +36,9 @@
 <div class="data-card">
     <div class="data-card-header">
         <h3>Berita Terbaru</h3>
-        <a href="{{ route('admin.posts.create') }}" class="btn btn-primary btn-sm">+ Buat Berita</a>
+        <div class="header-actions">
+            <a href="{{ route('admin.posts.create') }}" class="btn btn-primary btn-sm">+ Buat Berita</a>
+        </div>
     </div>
     <table class="data-table">
         <thead>

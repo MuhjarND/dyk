@@ -18,6 +18,12 @@
             @error('email')<div class="form-error">{{ $message }}</div>@enderror
         </div>
         <div class="form-group">
+            <label>Nomor WhatsApp</label>
+            <input type="text" name="whatsapp" class="form-control @error('whatsapp') is-invalid @enderror" value="{{ old('whatsapp', $user->whatsapp ?? '') }}" placeholder="Contoh: 082333106343">
+            <span class="form-hint">Digunakan untuk tombol kirim akun via WhatsApp.</span>
+            @error('whatsapp')<div class="form-error">{{ $message }}</div>@enderror
+        </div>
+        <div class="form-group">
             <label>Password {{ isset($user) ? '(kosongkan jika tidak diubah)' : '' }} <span class="required">{{ isset($user) ? '' : '*' }}</span></label>
             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" {{ isset($user) ? '' : 'required' }}>
             @error('password')<div class="form-error">{{ $message }}</div>@enderror
