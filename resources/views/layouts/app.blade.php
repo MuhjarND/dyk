@@ -116,20 +116,19 @@
         if (!prefersReducedMotion && finePointer) {
             document.body.classList.add('has-fancy-cursor');
 
-            var lotus = document.createElement('div');
+            var cursorDot = document.createElement('div');
             var halo = document.createElement('div');
-            lotus.className = 'cursor-lotus';
+            cursorDot.className = 'cursor-dot';
             halo.className = 'cursor-halo';
-            lotus.innerHTML = '<span class="lotus-petal lotus-petal-top"></span><span class="lotus-petal lotus-petal-left"></span><span class="lotus-petal lotus-petal-center"></span><span class="lotus-petal lotus-petal-right"></span><span class="lotus-petal lotus-petal-base"></span>';
             document.body.appendChild(halo);
-            document.body.appendChild(lotus);
+            document.body.appendChild(cursorDot);
 
             var pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
             var haloPointer = { x: pointer.x, y: pointer.y };
             var visible = false;
 
             function setOpacity(value) {
-                lotus.style.opacity = value;
+                cursorDot.style.opacity = value;
                 halo.style.opacity = value;
             }
 
@@ -137,7 +136,7 @@
                 haloPointer.x += (pointer.x - haloPointer.x) * 0.18;
                 haloPointer.y += (pointer.y - haloPointer.y) * 0.18;
 
-                lotus.style.transform = 'translate(' + pointer.x + 'px, ' + pointer.y + 'px)';
+                cursorDot.style.transform = 'translate(' + pointer.x + 'px, ' + pointer.y + 'px)';
                 halo.style.transform = 'translate(' + haloPointer.x + 'px, ' + haloPointer.y + 'px)';
                 requestAnimationFrame(animateCursor);
             }
@@ -159,12 +158,12 @@
 
             document.querySelectorAll('a, button, input, textarea, select, .btn').forEach(function (element) {
                 element.addEventListener('mouseenter', function () {
-                    lotus.classList.add('is-active');
+                    cursorDot.classList.add('is-active');
                     halo.classList.add('is-active');
                 });
 
                 element.addEventListener('mouseleave', function () {
-                    lotus.classList.remove('is-active');
+                    cursorDot.classList.remove('is-active');
                     halo.classList.remove('is-active');
                 });
             });

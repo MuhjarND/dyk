@@ -37,19 +37,28 @@
 
                 @if($post->media->count() > 0)
                 <div class="post-media-section">
-                    <div class="section-header" style="text-align:left;margin-bottom:24px;">
+                    <div class="post-media-header">
                         <h2>Dokumentasi Kegiatan</h2>
                         <p>Foto dan video kegiatan yang terkait dengan berita ini.</p>
                     </div>
                     <div class="post-media-grid">
                         @foreach($post->media as $media)
-                        <div class="post-media-card">
                             @if($media->isImage())
-                            <img src="{{ $media->file_url }}" alt="Dokumentasi {{ $post->title }}">
+                            <button
+                                type="button"
+                                class="post-media-card post-media-image"
+                                data-gallery-image="{{ $media->file_url }}"
+                                data-gallery-alt="Dokumentasi {{ $post->title }}"
+                                aria-label="Buka dokumentasi {{ $post->title }}"
+                            >
+                                <img src="{{ $media->file_url }}" alt="Dokumentasi {{ $post->title }}">
+                                <span class="post-media-overlay">Lihat Foto</span>
+                            </button>
                             @else
-                            <video src="{{ $media->file_url }}" controls preload="metadata"></video>
+                            <div class="post-media-card post-media-video">
+                                <video src="{{ $media->file_url }}" controls preload="metadata"></video>
+                            </div>
                             @endif
-                        </div>
                         @endforeach
                     </div>
                 </div>
@@ -129,4 +138,60 @@
         </div>
     </div>
 </section>
+
+<div class="media-lightbox" id="mediaLightbox" aria-hidden="true">
+    <button type="button" class="media-lightbox-close" data-lightbox-close aria-label="Tutup galeri">&times;</button>
+    <div class="media-lightbox-backdrop" data-lightbox-close></div>
+    <figure class="media-lightbox-frame">
+        <img src="" alt="" id="mediaLightboxImage">
+        <figcaption id="mediaLightboxCaption"></figcaption>
+    </figure>
+</div>
+@endsection
+
+@section('js')
+<script>
+(function () {
+    var lightbox = document.getElementById('mediaLightbox');
+    var image = document.getElementById('mediaLightboxImage');
+    var caption = document.getElementById('mediaLightboxCaption');
+    var triggers = document.querySelectorAll('[data-gallery-image]');
+
+    if (!lightbox || !image || !triggers.length) {
+        return;
+    }
+
+    function openLightbox(src, alt) {
+        image.src = src;
+        image.alt = alt || 'Dokumentasi kegiatan';
+        caption.textContent = alt || 'Dokumentasi kegiatan';
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        image.removeAttribute('src');
+    }
+
+    triggers.forEach(function (trigger) {
+        trigger.addEventListener('click', function () {
+            openLightbox(trigger.getAttribute('data-gallery-image'), trigger.getAttribute('data-gallery-alt'));
+        });
+    });
+
+    lightbox.querySelectorAll('[data-lightbox-close]').forEach(function (button) {
+        button.addEventListener('click', closeLightbox);
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && lightbox.classList.contains('is-open')) {
+            closeLightbox();
+        }
+    });
+})();
+</script>
 @endsection

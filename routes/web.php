@@ -25,6 +25,7 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Dashboard
     Route::get('/', 'Admin\DashboardController@index')->name('dashboard');
+    Route::post('/editor/upload', 'Admin\EditorUploadController@store')->name('editor.upload');
 
     // Posts
     Route::get('/posts', 'Admin\PostController@index')->name('posts.index');

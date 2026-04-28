@@ -216,7 +216,7 @@
                         </div>
                         <div class="agenda-item-body">
                             <h4>{{ $agenda->title }}</h4>
-                            <p>{{ $agenda->description ?: 'Agenda organisasi Dharmayukti Karini Cabang Papua Barat.' }}</p>
+                            <p>{{ $agenda->description ? \Illuminate\Support\Str::limit(strip_tags($agenda->description), 160) : 'Agenda organisasi Dharmayukti Karini Cabang Papua Barat.' }}</p>
                             <div class="agenda-item-meta">
                                 <span>{{ $agenda->location ?: 'Lokasi akan diperbarui' }}</span>
                                 <span>{{ $agenda->start_time ? substr($agenda->start_time, 0, 5) : 'Waktu menyusul' }}</span>

@@ -68,7 +68,7 @@ class AgendaController extends Controller
     {
         return $request->validate([
             'title' => 'required|max:255',
-            'description' => 'nullable|max:1000',
+            'description' => 'nullable|max:5000',
             'location' => 'nullable|max:255',
             'agenda_date' => 'required|date',
             'start_time' => 'nullable|date_format:H:i',

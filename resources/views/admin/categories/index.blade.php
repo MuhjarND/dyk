@@ -33,7 +33,7 @@
                     <td><span class="badge badge-info">{{ $cat->posts_count }}</span></td>
                     <td>
                         <div class="actions">
-                            <button class="btn btn-sm btn-outline" onclick="editCat({{ $cat->id }},'{{ $cat->name }}','{{ $cat->description }}')">Edit</button>
+                            <button class="btn btn-sm btn-outline" onclick='editCat({{ $cat->id }}, @json($cat->name), @json($cat->description))'>Edit</button>
                             <form method="POST" action="{{ route('admin.categories.destroy', $cat->id) }}" onsubmit="return confirm('Hapus kategori ini?')">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-danger">Hapus</button>
@@ -75,6 +75,9 @@
 function editCat(id, name, desc) {
     document.getElementById('editName').value = name;
     document.getElementById('editDesc').value = desc || '';
+    if (window.CKEDITOR && CKEDITOR.instances.editDesc) {
+        CKEDITOR.instances.editDesc.setData(desc || '');
+    }
     document.getElementById('editForm').action = '{{ url("admin/categories") }}/' + id;
     document.getElementById('editModal').style.display = 'flex';
 }

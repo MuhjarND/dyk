@@ -22,7 +22,7 @@
             <article class="profile-card">
                 <span class="profile-card-kicker">Profil</span>
                 <h3>{{ $page->title }}</h3>
-                <p>{{ $page->excerpt ?: 'Pelajari informasi lebih lengkap mengenai bagian profil ini.' }}</p>
+                <p>{{ $page->excerpt ? strip_tags($page->excerpt) : 'Pelajari informasi lebih lengkap mengenai bagian profil ini.' }}</p>
                 <a href="{{ route('profil.show', $page->slug) }}" class="btn btn-primary btn-sm">Buka Halaman</a>
             </article>
             @empty

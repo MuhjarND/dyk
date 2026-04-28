@@ -74,7 +74,7 @@ class ProfilePageController extends Controller
     {
         return $request->validate([
             'title' => 'required|max:255',
-            'excerpt' => 'nullable|max:500',
+            'excerpt' => 'nullable|max:1000',
             'content' => 'required',
             'sort_order' => 'nullable|integer|min:0',
         ]);

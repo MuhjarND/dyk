@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('title', $page->title)
-@section('meta_description', $page->excerpt ?: Str::limit(strip_tags($page->content), 160))
+@section('meta_description', $page->excerpt ? Str::limit(strip_tags($page->excerpt), 160) : Str::limit(strip_tags($page->content), 160))
 
 @section('content')
 <div class="page-header">
     <div class="container">
         <h1>{{ $page->title }}</h1>
-        <p>{{ $page->excerpt ?: 'Informasi profil Dharmayukti Karini Cabang Papua Barat' }}</p>
+        <p>{{ $page->excerpt ? strip_tags($page->excerpt) : 'Informasi profil Dharmayukti Karini Cabang Papua Barat' }}</p>
     </div>
 </div>
 

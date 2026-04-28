@@ -93,5 +93,63 @@
     </div>
 
     @yield('js')
+    <script src="https://cdn.ckeditor.com/4.22.1/full-all/ckeditor.js"></script>
+    <script>
+    (function () {
+        if (!window.CKEDITOR) {
+            return;
+        }
+
+        var uploadUrl = '{{ route('admin.editor.upload') }}?_token={{ csrf_token() }}';
+
+        CKEDITOR.disableAutoInline = true;
+
+        document.querySelectorAll('textarea').forEach(function (textarea, index) {
+            if (textarea.dataset.ckeditor === 'false') {
+                return;
+            }
+
+            if (!textarea.id) {
+                textarea.id = 'ckeditor-textarea-' + index;
+            }
+
+            if (CKEDITOR.instances[textarea.id]) {
+                return;
+            }
+
+            CKEDITOR.replace(textarea.id, {
+                height: Math.max(180, (parseInt(textarea.getAttribute('rows'), 10) || 8) * 32),
+                allowedContent: true,
+                extraPlugins: 'uploadimage,image2,justify,colorbutton,font,table,tableresize,autoembed,embed',
+                removePlugins: 'easyimage,cloudservices',
+                filebrowserUploadUrl: uploadUrl,
+                filebrowserImageUploadUrl: uploadUrl,
+                uploadUrl: uploadUrl,
+                imageUploadUrl: uploadUrl,
+                filebrowserUploadMethod: 'xhr',
+                fileTools_requestHeaders: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                toolbar: [
+                    { name: 'styles', items: ['Format', 'Font', 'FontSize'] },
+                    { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat'] },
+                    { name: 'colors', items: ['TextColor', 'BGColor'] },
+                    { name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                    { name: 'insert', items: ['Image', 'Table', 'HorizontalRule', 'SpecialChar', 'Embed'] },
+                    { name: 'links', items: ['Link', 'Unlink'] },
+                    { name: 'tools', items: ['Maximize', 'Source'] }
+                ]
+            });
+        });
+
+        document.querySelectorAll('form').forEach(function (form) {
+            form.addEventListener('submit', function () {
+                Object.keys(CKEDITOR.instances).forEach(function (name) {
+                    CKEDITOR.instances[name].updateElement();
+                });
+            });
+        });
+    })();
+    </script>
 </body>
 </html>
