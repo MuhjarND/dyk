@@ -13,6 +13,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/berita', 'PostController@index')->name('berita');
 Route::get('/berita/{slug}', 'PostController@show')->name('berita.detail');
 Route::get('/profil', 'HomeController@profil')->name('profil');
+Route::get('/profil/daftar-anggota', 'HomeController@members')->name('profil.members');
 Route::get('/profil/{slug}', 'HomeController@profilShow')->name('profil.show');
 Route::get('/kontak', 'HomeController@kontak')->name('kontak');
 
@@ -43,6 +44,13 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/profile-pages/{id}/edit', 'Admin\ProfilePageController@edit')->name('profile-pages.edit');
         Route::put('/profile-pages/{id}', 'Admin\ProfilePageController@update')->name('profile-pages.update');
         Route::delete('/profile-pages/{id}', 'Admin\ProfilePageController@destroy')->name('profile-pages.destroy');
+
+        Route::get('/members', 'Admin\MemberController@index')->name('members.index');
+        Route::get('/members/create', 'Admin\MemberController@create')->name('members.create');
+        Route::post('/members', 'Admin\MemberController@store')->name('members.store');
+        Route::get('/members/{id}/edit', 'Admin\MemberController@edit')->name('members.edit');
+        Route::put('/members/{id}', 'Admin\MemberController@update')->name('members.update');
+        Route::delete('/members/{id}', 'Admin\MemberController@destroy')->name('members.destroy');
 
         Route::get('/agendas', 'Admin\AgendaController@index')->name('agendas.index');
         Route::get('/agendas/create', 'Admin\AgendaController@create')->name('agendas.create');

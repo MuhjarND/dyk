@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Agenda;
 use App\Post;
 use App\Category;
+use App\Member;
 use App\ProfilePage;
 use App\Slider;
 use Carbon\Carbon;
@@ -104,6 +105,13 @@ class HomeController extends Controller
             ->get();
 
         return view('profil-show', compact('page', 'pages'));
+    }
+
+    public function members()
+    {
+        $members = Member::orderBy('sort_order')->orderBy('name')->paginate(20);
+
+        return view('members', compact('members'));
     }
 
     public function kontak()

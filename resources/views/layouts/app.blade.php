@@ -20,13 +20,14 @@
                 <li><a href="{{ route('berita') }}" class="{{ request()->routeIs('berita*') ? 'active' : '' }}">Berita</a></li>
                 <li class="nav-dropdown {{ request()->routeIs('profil*') ? 'active' : '' }}">
                     <a href="{{ route('profil') }}" class="{{ request()->routeIs('profil*') ? 'active' : '' }}">Profil</a>
-                    @if(isset($navProfilePages) && $navProfilePages->count())
                     <ul class="nav-dropdown-menu">
+                        <li><a href="{{ route('profil.members') }}">Daftar Anggota</a></li>
+                        @if(isset($navProfilePages) && $navProfilePages->count())
                         @foreach($navProfilePages as $navProfilePage)
                         <li><a href="{{ route('profil.show', $navProfilePage->slug) }}">{{ $navProfilePage->title }}</a></li>
                         @endforeach
+                        @endif
                     </ul>
-                    @endif
                 </li>
                 <li><a href="{{ route('kontak') }}" class="{{ request()->routeIs('kontak') ? 'active' : '' }}">Kontak</a></li>
                 @auth
